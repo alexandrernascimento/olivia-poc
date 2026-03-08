@@ -1,9 +1,59 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
 
-<title>OLÍVIA - CNPW</title>
+<title>OLÍVIA - GNPW</title>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Rep_waV1MCB-tO8C3daIdmHGJIQS8N4",
+  authDomain: "olivia-poc.firebaseapp.com",
+  projectId: "olivia-poc",
+  storageBucket: "olivia-poc.firebasestorage.app",
+  messagingSenderId: "28820075425",
+  appId: "1:28820075425:web:6f2e5015faa9718d4e91e0"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth();
+
+const provider = new GoogleAuthProvider();
+
+window.login = async function(){
+
+const result = await signInWithPopup(auth, provider);
+
+const user = result.user;
+
+const allowedUsers = [
+"alexandrernascimento@gmail.com"
+]
+
+if(allowedUsers.includes(user.email)){
+
+document.getElementById("login").style.display="none"
+
+document.getElementById("chat").style.display="block"
+
+document.getElementById("user").innerHTML="Bem-vindo "+user.email
+
+}else{
+
+alert("Seu email não está autorizado a usar a OLÍVIA.")
+
+}
+
+}
+
+</script>
 
 <style>
 
@@ -11,48 +61,22 @@ body{
 font-family:Arial;
 background:white;
 text-align:center;
-margin:40px;
-}
-
-.logo{
-width:220px;
-margin-bottom:20px;
-}
-
-.avatar{
-width:120px;
-height:120px;
-border-radius:60px;
-margin:auto;
-background:linear-gradient(135deg,#0E8FA3,#23B6C7);
-margin-bottom:20px;
-}
-
-#chat{
-width:500px;
-margin:auto;
-height:300px;
-border:1px solid #ddd;
-border-radius:10px;
-padding:10px;
-overflow:auto;
-text-align:left;
-}
-
-input{
-width:350px;
-padding:10px;
-border-radius:5px;
-border:1px solid #ccc;
+margin-top:50px;
 }
 
 button{
-padding:10px;
+padding:12px;
 background:#0E8FA3;
 color:white;
 border:none;
-border-radius:5px;
+border-radius:6px;
 cursor:pointer;
+font-size:16px;
+}
+
+#chat{
+display:none;
+margin-top:20px;
 }
 
 </style>
@@ -61,37 +85,22 @@ cursor:pointer;
 
 <body>
 
-<img src="logo.png" class="logo">
+<h1>OLÍVIA</h1>
+<p>Assistente Inteligente GNPW</p>
 
-<h2>OLÍVIA</h2>
-<p>Assistente Inteligente</p>
+<div id="login">
 
-<div class="avatar"></div>
+<button onclick="login()">Entrar com Google</button>
 
-<div id="chat"></div>
+</div>
 
-<br>
+<div id="chat">
 
-<input id="msg" placeholder="Pergunte algo para OLÍVIA">
-<button onclick="enviar()">Enviar</button>
+<p id="user"></p>
 
-<script>
+<input placeholder="Pergunte algo para OLÍVIA">
 
-function enviar(){
-
-let texto=document.getElementById("msg").value
-
-let chat=document.getElementById("chat")
-
-chat.innerHTML+="<div><b>Você:</b> "+texto+"</div>"
-
-let resposta="Estou processando sua pergunta."
-
-chat.innerHTML+="<div style='color:#0E8FA3'><b>OLÍVIA:</b> "+resposta+"</div>"
-
-}
-
-</script>
+</div>
 
 </body>
 
