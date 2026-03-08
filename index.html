@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>OLÍVIA - CNPW</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:white;
+text-align:center;
+margin:40px;
+}
+
+.logo{
+width:220px;
+margin-bottom:20px;
+}
+
+.avatar{
+width:120px;
+height:120px;
+border-radius:60px;
+margin:auto;
+background:linear-gradient(135deg,#0E8FA3,#23B6C7);
+margin-bottom:20px;
+}
+
+#chat{
+width:500px;
+margin:auto;
+height:300px;
+border:1px solid #ddd;
+border-radius:10px;
+padding:10px;
+overflow:auto;
+text-align:left;
+}
+
+input{
+width:350px;
+padding:10px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px;
+background:#0E8FA3;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<img src="logo.png" class="logo">
+
+<h2>OLÍVIA</h2>
+<p>Assistente Inteligente</p>
+
+<div class="avatar"></div>
+
+<div id="chat"></div>
+
+<br>
+
+<input id="msg" placeholder="Pergunte algo para OLÍVIA">
+<button onclick="enviar()">Enviar</button>
+
+<script>
+
+function enviar(){
+
+let texto=document.getElementById("msg").value
+
+let chat=document.getElementById("chat")
+
+chat.innerHTML+="<div><b>Você:</b> "+texto+"</div>"
+
+let resposta="Estou processando sua pergunta."
+
+chat.innerHTML+="<div style='color:#0E8FA3'><b>OLÍVIA:</b> "+resposta+"</div>"
+
+}
+
+</script>
+
+</body>
+
+</html>
