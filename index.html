@@ -1,106 +1,237 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="pt-BR">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>OLÍV-IA | GNPW</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+signOut
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC-Rep_waV1MCB-tO8C3daIdmHGJIQS8N4",
-  authDomain: "olivia-poc.firebaseapp.com",
-  projectId: "olivia-poc",
-  storageBucket: "olivia-poc.firebasestorage.app",
-  messagingSenderId: "28820075425",
-  appId: "1:28820075425:web:6f2e5015faa9718d4e91e0"
+
+apiKey: "AIzaSyC-Rep_waV1MCB-tO8C3daIdmHGJIQS8N4",
+
+authDomain: "olivia-poc.firebaseapp.com",
+
+projectId: "olivia-poc",
+
+storageBucket: "olivia-poc.firebasestorage.app",
+
+messagingSenderId: "28820075425",
+
+appId: "1:28820075425:web:6f2e5015faa9718d4e91e0"
+
 };
+
 
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth();
+const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider();
 
+
+const allowedUsers = [
+
+"alexandrernascimento@gmail.com"
+
+];
+
+
 window.login = async function(){
+
+try{
 
 const result = await signInWithPopup(auth, provider);
 
 const user = result.user;
 
-const allowedUsers = [
-"alexandrernascimento@gmail.com"
-]
-
 if(allowedUsers.includes(user.email)){
 
 document.getElementById("loginBox").style.display="none"
-document.getElementById("chat").style.display="block"
+
+document.getElementById("chatBox").style.display="block"
+
+document.getElementById("userEmail").textContent="Conectado como: "+user.email
 
 }else{
+
+await signOut(auth)
 
 alert("Seu email não está autorizado para usar a OLÍV-IA.")
 
 }
 
+}catch(error){
+
+console.error(error)
+
+alert("Erro no login")
+
+}
+
+}
+
+
+window.logoutUser = async function(){
+
+await signOut(auth)
+
+document.getElementById("chatBox").style.display="none"
+
+document.getElementById("loginBox").style.display="block"
+
 }
 
 </script>
 
+
 <style>
+
+*{
+
+box-sizing:border-box;
+
+}
 
 body{
 
 margin:0;
+
+min-height:100vh;
+
 font-family:Arial;
-height:100vh;
 
 background-image:url("background.png");
-background-size:cover;
-background-position:center;
+
+background-size:contain;
+
+background-repeat:no-repeat;
+
+background-position:center bottom;
+
+background-color:#f4f4f6;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 }
 
-#loginBox{
 
-background:rgba(255,255,255,0.85);
-padding:40px;
-border-radius:10px;
-text-align:center;
-box-shadow:0 10px 40px rgba(0,0,0,0.2);
+.overlay{
+
+width:100%;
+
+max-width:1200px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
 
 }
+
+
+.card{
+
+width:100%;
+
+max-width:420px;
+
+background:rgba(255,255,255,0.92);
+
+border-radius:16px;
+
+padding:32px;
+
+box-shadow:0 12px 40px rgba(0,0,0,0.15);
+
+text-align:center;
+
+/* DESLOCAMENTO PARA ESQUERDA */
+
+transform:translateX(-56px);
+
+}
+
+
+.title{
+
+margin:0;
+
+font-size:36px;
+
+color:#4d2c91;
+
+font-weight:bold;
+
+}
+
+
+.subtitle{
+
+margin-bottom:30px;
+
+color:#6a5f8a;
+
+}
+
 
 .google-btn{
 
+width:100%;
+
+border:1px solid #dadce0;
+
+background:#fff;
+
+color:#3c4043;
+
+border-radius:10px;
+
+height:48px;
+
 display:flex;
+
 align-items:center;
+
 justify-content:center;
 
-gap:10px;
+gap:12px;
 
-background:white;
-border:1px solid #dadce0;
-border-radius:6px;
-
-padding:10px 20px;
 cursor:pointer;
 
 font-size:15px;
-font-weight:500;
+
+font-weight:600;
+
+transition:0.2s;
 
 }
+
+
+.google-btn:hover{
+
+background:#f8f9fa;
+
+}
+
 
 .google-btn img{
 
@@ -108,18 +239,72 @@ width:20px;
 
 }
 
-.google-btn:hover{
 
-background:#f7f7f7;
+#chatBox{
+
+display:none;
+
+text-align:left;
 
 }
 
-#chat{
 
-display:none;
-background:white;
-padding:30px;
+.status{
+
+font-size:14px;
+
+margin-bottom:10px;
+
+}
+
+
+.chat-area{
+
+border:1px solid #ddd;
+
 border-radius:10px;
+
+background:#fff;
+
+padding:16px;
+
+margin-bottom:10px;
+
+}
+
+
+.chat-input{
+
+width:100%;
+
+height:40px;
+
+border:1px solid #ccc;
+
+border-radius:8px;
+
+padding:10px;
+
+margin-bottom:10px;
+
+}
+
+
+.logout-btn{
+
+width:100%;
+
+height:42px;
+
+border:none;
+
+border-radius:10px;
+
+background:#0e8fa3;
+
+color:#fff;
+
+cursor:pointer;
 
 }
 
@@ -127,11 +312,19 @@ border-radius:10px;
 
 </head>
 
+
 <body>
+
+<div class="overlay">
+
+<div class="card">
 
 <div id="loginBox">
 
-<h2>Entrar na OLÍV-IA</h2>
+<h1 class="title">OLÍV-IA</h1>
+
+<p class="subtitle">Inteligência que lidera decisões</p>
+
 
 <button class="google-btn" onclick="login()">
 
@@ -141,13 +334,31 @@ Entrar com Google
 
 </button>
 
+
 </div>
 
-<div id="chat">
 
-<h2>OLÍV-IA</h2>
+<div id="chatBox">
 
-<input placeholder="Pergunte algo">
+<div id="userEmail" class="status"></div>
+
+<div class="chat-area">
+
+Ambiente autenticado com sucesso.
+
+<br><br>
+
+Aqui entra o chat da OLÍV-IA.
+
+</div>
+
+<input class="chat-input" placeholder="Pergunte algo para OLÍV-IA">
+
+<button class="logout-btn" onclick="logoutUser()">Sair</button>
+
+</div>
+
+</div>
 
 </div>
 
