@@ -4,7 +4,9 @@
 
 <head>
 
-<title>OLÍVIA - GNPW</title>
+<title>OLÍV-IA | GNPW</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script type="module">
 
@@ -39,15 +41,12 @@ const allowedUsers = [
 
 if(allowedUsers.includes(user.email)){
 
-document.getElementById("login").style.display="none"
-
+document.getElementById("loginBox").style.display="none"
 document.getElementById("chat").style.display="block"
-
-document.getElementById("user").innerHTML="Bem-vindo "+user.email
 
 }else{
 
-alert("Seu email não está autorizado a usar a OLÍVIA.")
+alert("Seu email não está autorizado para usar a OLÍV-IA.")
 
 }
 
@@ -58,25 +57,70 @@ alert("Seu email não está autorizado a usar a OLÍVIA.")
 <style>
 
 body{
+
+margin:0;
 font-family:Arial;
-background:white;
-text-align:center;
-margin-top:50px;
+height:100vh;
+
+background-image:url("background.png");
+background-size:cover;
+background-position:center;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
 }
 
-button{
-padding:12px;
-background:#0E8FA3;
-color:white;
-border:none;
+#loginBox{
+
+background:rgba(255,255,255,0.85);
+padding:40px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 10px 40px rgba(0,0,0,0.2);
+
+}
+
+.google-btn{
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+gap:10px;
+
+background:white;
+border:1px solid #dadce0;
 border-radius:6px;
+
+padding:10px 20px;
 cursor:pointer;
-font-size:16px;
+
+font-size:15px;
+font-weight:500;
+
+}
+
+.google-btn img{
+
+width:20px;
+
+}
+
+.google-btn:hover{
+
+background:#f7f7f7;
+
 }
 
 #chat{
+
 display:none;
-margin-top:20px;
+background:white;
+padding:30px;
+border-radius:10px;
+
 }
 
 </style>
@@ -85,20 +129,25 @@ margin-top:20px;
 
 <body>
 
-<h1>OLÍVIA</h1>
-<p>Assistente Inteligente GNPW</p>
+<div id="loginBox">
 
-<div id="login">
+<h2>Entrar na OLÍV-IA</h2>
 
-<button onclick="login()">Entrar com Google</button>
+<button class="google-btn" onclick="login()">
+
+<img src="https://developers.google.com/identity/images/g-logo.png">
+
+Entrar com Google
+
+</button>
 
 </div>
 
 <div id="chat">
 
-<p id="user"></p>
+<h2>OLÍV-IA</h2>
 
-<input placeholder="Pergunte algo para OLÍVIA">
+<input placeholder="Pergunte algo">
 
 </div>
 
